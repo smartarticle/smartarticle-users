@@ -28,9 +28,9 @@ public class DemoResource {
                 .add("clani", Json.createArrayBuilder().add("aj4880"))
                 .add("opis_projekta", "Nas projekt implementira aplikacijo za upravljanje in deljenje clankov.")
                 .add("mikrostoritve", Json.createArrayBuilder().add("http://35.204.91.158:8081/v1/orders"))
-                .add("github", Json.createArrayBuilder().add("https://github.com/jmezna/rso-customers"))
-                .add("travis", Json.createArrayBuilder().add("https://travis-ci.org/jmezna/rso-customers"))
-                .add("dockerhub", Json.createArrayBuilder().add("https://hub.docker.com/r/jmezna/rso-customers"))
+                .add("github", Json.createArrayBuilder().add("https://github.com/smartarticle/smartarticle-users"))
+                .add("travis", Json.createArrayBuilder().add("https://travis-ci.org/smartarticle/smartarticle-users"))
+                .add("dockerhub", Json.createArrayBuilder().add("https://hub.docker.com/r/ajugo/smartarticle-users"))
                 .build();
         return Response.ok(json.toString()).build();
     }

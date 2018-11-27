@@ -1,4 +1,4 @@
-package si.fri.rso.smartarticle.accounts.services.producers;
+package si.fri.rso.smartarticle.accounts.services.beans.producers;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Disposes;

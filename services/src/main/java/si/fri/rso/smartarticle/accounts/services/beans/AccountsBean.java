@@ -1,9 +1,11 @@
-package si.fri.rso.smartarticle.accounts.services;
+package si.fri.rso.smartarticle.accounts.services.beans;
 
 
+import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.rso.smartarticle.accounts.models.entities.Account;
+import si.fri.rso.smartarticle.accounts.services.configuration.AppProperties;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -14,6 +16,7 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.Optional;
 
 
 @RequestScoped
@@ -25,17 +28,25 @@ public class AccountsBean {
     private EntityManager em;
 
     @Inject
+    private AppProperties appProperties;
+
+    @Inject
     private AccountsBean accountsBean;
 
     @PostConstruct
     private void init() {}
 
+    @Inject
+    @DiscoverService("smartarticle-users")
+    private Optional<String> baseUrl;
 
     public List<Account> getAccounts() {
+        if (appProperties.isExternalServicesEnabled() && baseUrl.isPresent()) {
+            TypedQuery<Account> query = em.createNamedQuery("Account.getAll", Account.class);
 
-        TypedQuery<Account> query = em.createNamedQuery("Account.getAll", Account.class);
-
-        return query.getResultList();
+            return query.getResultList();
+        }
+        return null;
 
     }
 

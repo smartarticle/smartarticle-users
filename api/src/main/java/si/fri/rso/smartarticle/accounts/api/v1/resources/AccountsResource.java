@@ -1,7 +1,7 @@
 package si.fri.rso.smartarticle.accounts.api.v1.resources;
 
 import si.fri.rso.smartarticle.accounts.models.entities.Account;
-import si.fri.rso.smartarticle.accounts.services.AccountsBean;
+import si.fri.rso.smartarticle.accounts.services.beans.AccountsBean;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
