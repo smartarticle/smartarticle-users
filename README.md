@@ -1,7 +1,11 @@
 # RSO: Accounts microservice
 
-## Prerequisites
-
+## Build and start system 
 ```bash
-docker run -d --name pg-accounts -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=account -p 5432:5432 postgres:10.5
+docker-compose up -d --build
+```
+
+## Stop system
+```bash
+docker-compose down
 ```
