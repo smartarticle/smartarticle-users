@@ -1,5 +1,6 @@
 version: "3"
 services:
+
   postgres:
     image: postgres:10.5
     ports:
@@ -7,17 +8,22 @@ services:
     environment:
       POSTGRES_USER: dbuser
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: customer
+      POSTGRES_DB: account
+
   smartarticle-users:
     image: ajugo/smartarticle-users:0.2
     ports:
     - 8080:8080
     environment:
       KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres:5432/account
+      KUMULUZEE_DATASOURCES0_USERNAME: dbuser
+      KUMULUZEE_DATASOURCES0_PASSWORD: postgres
       KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
       KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
     depends_on:
     - postgres
+    - etcd
+
   etcd:
     image: quay.io/coreos/etcd:latest
     ports:
@@ -31,3 +37,14 @@ services:
       -listen-peer-urls http://0.0.0.0:2380
       -initial-cluster node1=http://etcd:2380
       -cors="*"
+
+  etcd-browser:
+    image: buddho/etcd-browser
+    ports:
+    - 8079:8080
+    environment:
+      ETCD_HOST: etcd
+      ETCD_PORT: 2379
+      SERVER_PORT: 8080
+    depends_on:
+    - etcd

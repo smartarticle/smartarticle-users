@@ -21,4 +21,4 @@ config:
       hosts: http://172.17.0.1:2379
 app-properties:
   external-services:
-    enabled: false
+    enabled: true
