@@ -41,13 +41,8 @@ public class AccountsBean {
     private Optional<String> baseUrl;
 
     public List<Account> getAccounts() {
-        if (appProperties.isExternalServicesEnabled() && baseUrl.isPresent()) {
-            TypedQuery<Account> query = em.createNamedQuery("Account.getAll", Account.class);
-
-            return query.getResultList();
-        }
-        return null;
-
+        TypedQuery<Account> query = em.createNamedQuery("Account.getAll", Account.class);
+        return query.getResultList();
     }
 
     public List<Account> getAccountsFilter(UriInfo uriInfo) {

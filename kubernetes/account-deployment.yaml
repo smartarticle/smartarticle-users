@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account
+  template:
+    metadata:
+      labels:
+        app: account
+    spec:
+      containers:
+      - image: ajugo/smartarticle-users:0.3
+        name: account
+        env:
+        - name: KUMULUZEE_DISCOVERY_CLUSTER
+          value: gcloud
+        - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+          value: http://etcd:2379
+        - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+          value: http://etcd:2379
+        - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+          value: jdbc:postgresql://account-db:5432/account
+        - name: KUMULUZEE_SERVER_BASEURL
+          value: http://35.240.79.227:8080
+        - name: KUMULUZEE_DATASOURCES0_USERNAME
+          value: dbuser
+        - name: KUMULUZEE_DATASOURCES0_PASSWORD
+          value: postgres
+        ports:
+        - containerPort: 8080
+          name: server
+          protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: account
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: account
