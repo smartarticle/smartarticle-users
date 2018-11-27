@@ -45,6 +45,7 @@ public class AccountsBean {
             TypedQuery<Account> query = em.createNamedQuery("Account.getAll", Account.class);
             return query.getResultList();
         }
+        return null;
     }
 
     public List<Account> getAccountsFilter(UriInfo uriInfo) {
