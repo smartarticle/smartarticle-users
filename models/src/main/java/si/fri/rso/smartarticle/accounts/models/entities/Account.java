@@ -20,10 +20,12 @@ public class Account {
     @Column(name = "last_name")
     private String lastName;
 
-    private String address;
-
     @Column(name = "date_of_birth")
     private Instant dateOfBirth;
+
+    private String title;
+
+    private String institute;
 
     public Integer getId() {
         return id;
@@ -49,12 +51,12 @@ public class Account {
         this.lastName = lastName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Instant getDateOfBirth() {
@@ -64,4 +66,8 @@ public class Account {
     public void setDateOfBirth(Instant dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+    public String getInstitute() { return institute; }
+
+    public void setInstitute(String institute) { this.institute = institute; }
 }

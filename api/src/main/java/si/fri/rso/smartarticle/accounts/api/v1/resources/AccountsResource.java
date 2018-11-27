@@ -74,22 +74,6 @@ public class AccountsResource {
         }
     }
 
-    @PUT
-    @Path("{accountId}")
-    public Response putZavarovanec(@PathParam("accountId") String accountId, Account account) {
-
-        account = accountsBean.putAccount(accountId, account);
-
-        if (account == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } else {
-            if (account.getId() != null)
-                return Response.status(Response.Status.OK).entity(account).build();
-            else
-                return Response.status(Response.Status.NOT_MODIFIED).build();
-        }
-    }
-
     @DELETE
     @Path("{accountId}")
     public Response deleteAccount(@PathParam("accountId") String accountId) {
