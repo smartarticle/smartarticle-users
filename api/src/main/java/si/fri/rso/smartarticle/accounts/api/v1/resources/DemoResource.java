@@ -27,10 +27,14 @@ public class DemoResource {
         JsonObject json = Json.createObjectBuilder()
                 .add("clani", Json.createArrayBuilder().add("aj4880"))
                 .add("opis_projekta", "Nas projekt implementira aplikacijo za upravljanje in deljenje clankov.")
-                .add("mikrostoritve", Json.createArrayBuilder().add("http://159.122.187.161:30473/v1/accounts"))
-                .add("github", Json.createArrayBuilder().add("https://github.com/smartarticle/smartarticle-users"))
-                .add("travis", Json.createArrayBuilder().add("https://travis-ci.org/smartarticle/smartarticle-users"))
-                .add("dockerhub", Json.createArrayBuilder().add("https://hub.docker.com/r/ajugo/smartarticle-users"))
+                .add("mikrostoritve", Json.createArrayBuilder().add("http://159.122.187.161:30473/v1/accounts")
+                                                                  .add("http://159.122.187.161:32556/v1/institutions"))
+                .add("github", Json.createArrayBuilder().add("https://github.com/smartarticle/smartarticle-users")
+                                                           .add("https://github.com/smartarticle/smartarticle-institutions"))
+                .add("travis", Json.createArrayBuilder().add("https://travis-ci.org/smartarticle/smartarticle-users")
+                                                           .add("https://travis-ci.org/smartarticle/smartarticle-institutions"))
+                .add("dockerhub", Json.createArrayBuilder().add("https://hub.docker.com/r/ajugo/smartarticle-users")
+                                                              .add("https://hub.docker.com/r/ajugo/smartarticle-institutions/"))
                 .build();
         return Response.ok(json.toString()).build();
     }

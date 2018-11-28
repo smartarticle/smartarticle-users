@@ -13,7 +13,7 @@ spec:
         app: account
     spec:
       containers:
-      - image: ajugo/smartarticle-users:0.5
+      - image: ajugo/smartarticle-users:0.6
         name: account
         env:
         - name: KUMULUZEE_DISCOVERY_CLUSTER
