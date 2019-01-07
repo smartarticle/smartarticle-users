@@ -4,6 +4,7 @@ package si.fri.rso.smartarticle.accounts.services.beans;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
+import si.fri.rso.smartarticle.accounts.models.dtos.Article;
 import si.fri.rso.smartarticle.accounts.models.dtos.Institution;
 import si.fri.rso.smartarticle.accounts.models.entities.Account;
 import si.fri.rso.smartarticle.accounts.services.configuration.AppProperties;
@@ -46,6 +47,10 @@ public class AccountsBean {
     @DiscoverService("smartarticle-institutions")
     private Provider<Optional<String>> institutionBaseProvider;
 
+    @Inject
+    @DiscoverService("smartarticle-articles")
+    private Provider<Optional<String>> articleBaseProvider;
+
     @PostConstruct
     private void init() {
         httpClient = ClientBuilder.newClient();
@@ -59,8 +64,8 @@ public class AccountsBean {
             List<Account> acc = JPAUtils.queryEntities(em, Account.class, queryParameters);
             for (Account ac: acc) {
                 try {
-                    Institution inst = accountsBean.getInstitution(Integer.parseInt(ac.getInstituteId()));
-                    ac.setInstitution(inst);
+                    ac.setInstitution(accountsBean.getInstitution(Integer.parseInt(ac.getInstituteId())));
+                    ac.setArticles(accountsBean.getArticles(ac.getId()));
                 } catch (InternalServerErrorException e){}
             }
             return acc;
@@ -83,11 +88,30 @@ public class AccountsBean {
         if (account == null) {
             throw new NotFoundException();
         }
-        try {
-            Institution inst = accountsBean.getInstitution(Integer.parseInt(account.getInstituteId()));
-            account.setInstitution(inst);
-        } catch (InternalServerErrorException e){}
+        Institution inst = accountsBean.getInstitution(Integer.parseInt(account.getInstituteId()));
+        List<Article> art = accountsBean.getArticles(accountId);
+        account.setInstitution(inst);
+        account.setArticles(art);
         return account;
+    }
+
+
+    public List<Article> getArticles(Integer accountId) {
+        Optional<String> baseUrl = articleBaseProvider.get();
+        if (baseUrl.isPresent()) {
+            try {
+                String link = baseUrl.get();
+                return httpClient
+                        .target(link + "/v1/articles?where=accountId:EQ:" + accountId)
+                        .request().get(new GenericType<List<Article>>() {
+                        });
+            } catch (WebApplicationException | ProcessingException e) {
+                log.severe(e.getMessage());
+                throw new InternalServerErrorException(e);
+            }
+        }
+        return null;
+
     }
 
     public Account createAccount(Account account) {

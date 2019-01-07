@@ -2,10 +2,12 @@ package si.fri.rso.smartarticle.accounts.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import si.fri.rso.smartarticle.accounts.models.dtos.Article;
 import si.fri.rso.smartarticle.accounts.models.dtos.Institution;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Entity(name = "account")
 @NamedQueries(value =
@@ -37,6 +39,9 @@ public class Account {
 
     @Transient
     private Institution institution;
+
+    @Transient
+    private List<Article> articles;
 
     public Integer getId() {
         return id;
@@ -87,4 +92,13 @@ public class Account {
     public Institution getInstitution() { return institution; }
 
     public void setInstitution(Institution institute) { this.institution = institute; }
+
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
 }
