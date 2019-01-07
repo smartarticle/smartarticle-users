@@ -13,6 +13,8 @@ public class Article {
 
     private Instant creation;
 
+    private String accountId;
+
     public Integer getId() {
         return id;
     }
@@ -47,5 +49,13 @@ public class Article {
 
     public void setCreation(Instant creation) {
         this.creation = creation;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 }

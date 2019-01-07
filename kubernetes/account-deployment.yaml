@@ -13,7 +13,7 @@ spec:
         app: account
     spec:
       containers:
-      - image: ajugo/smartarticle-users:0.10
+      - image: ajugo/smartarticle-users:0.11
         name: account
         imagePullPolicy: "Always"
         env:
