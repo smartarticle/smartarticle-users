@@ -77,8 +77,10 @@ public class AccountsBean {
         if (account == null) {
             throw new NotFoundException();
         }
-        Institution inst = accountsBean.getInstitution(account.getInstituteId());
-        account.setInstitution(inst);
+        try {
+            Institution inst = accountsBean.getInstitution(account.getInstituteId());
+            account.setInstitution(inst);
+        } catch (InternalServerErrorException e){}
         return account;
     }
 
@@ -144,6 +146,8 @@ public class AccountsBean {
                         });
             } catch (WebApplicationException | ProcessingException e) {
                 log.severe(e.getMessage());
+                String link = baseUrl.get();
+                log.severe(link + "/v1/accounts/info/" + institutionId);
                 throw new InternalServerErrorException(e);
             }
         }
