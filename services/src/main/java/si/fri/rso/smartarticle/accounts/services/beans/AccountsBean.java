@@ -139,7 +139,7 @@ public class AccountsBean {
             try {
                 String link = baseUrl.get();
                 return httpClient
-                        .target(link + "/v1/accounts/info?where=instituteId:EQ:" + institutionId)
+                        .target(link + "/v1/accounts/info/" + institutionId)
                         .request().get(new GenericType<Institution>() {
                         });
             } catch (WebApplicationException | ProcessingException e) {
