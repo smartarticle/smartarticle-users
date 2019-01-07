@@ -1,11 +1,11 @@
 package si.fri.rso.smartarticle.accounts.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import si.fri.rso.smartarticle.accounts.models.dtos.Institution;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.List;
 
 @Entity(name = "account")
 @NamedQueries(value =
@@ -78,8 +78,10 @@ public class Account {
         this.dateOfBirth = dateOfBirth;
     }
 
+    @JsonProperty
     public String getInstituteId() { return instituteId; }
 
+    @JsonIgnore
     public void setInstituteId(String instituteId) { this.instituteId = instituteId; }
 
     public Institution getInstitution() { return institution; }
