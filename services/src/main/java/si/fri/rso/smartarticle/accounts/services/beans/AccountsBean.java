@@ -141,13 +141,13 @@ public class AccountsBean {
             try {
                 String link = baseUrl.get();
                 return httpClient
-                        .target(link + "/v1/accounts/info/" + institutionId)
+                        .target(link + "/v1/institutions/info/" + institutionId)
                         .request().get(new GenericType<Institution>() {
                         });
             } catch (WebApplicationException | ProcessingException e) {
                 log.severe(e.getMessage());
                 String link = baseUrl.get();
-                log.severe(link + "/v1/accounts/info/" + institutionId);
+                log.severe(link + "/v1/institutions/info/" + institutionId);
                 throw new InternalServerErrorException(e);
             }
         }
