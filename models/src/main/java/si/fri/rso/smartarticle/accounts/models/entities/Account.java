@@ -1,5 +1,6 @@
 package si.fri.rso.smartarticle.accounts.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import si.fri.rso.smartarticle.accounts.models.dtos.Institution;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class Account {
 
     private String title;
 
+    @JsonIgnore
     @Column(name = "institute_id")
     private String instituteId;
 

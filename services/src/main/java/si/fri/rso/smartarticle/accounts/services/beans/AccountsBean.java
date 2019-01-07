@@ -56,8 +56,14 @@ public class AccountsBean {
             QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery())
                     .defaultOffset(0)
                     .build();
-
-            return JPAUtils.queryEntities(em, Account.class, queryParameters);
+            List<Account> acc = JPAUtils.queryEntities(em, Account.class, queryParameters);
+            for (Account ac: acc) {
+                try {
+                    Institution inst = accountsBean.getInstitution(Integer.parseInt(ac.getInstituteId()));
+                    ac.setInstitution(inst);
+                } catch (InternalServerErrorException e){}
+            }
+            return acc;
         }
         return null;
     }
