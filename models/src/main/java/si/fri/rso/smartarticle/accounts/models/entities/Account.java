@@ -1,7 +1,10 @@
 package si.fri.rso.smartarticle.accounts.models.entities;
 
+import si.fri.rso.smartarticle.accounts.models.dtos.Institution;
+
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Entity(name = "account")
 @NamedQueries(value =
@@ -29,6 +32,9 @@ public class Account {
 
     @Column(name = "institute_id")
     private String instituteId;
+
+    @Transient
+    private Institution institution;
 
     public Integer getId() {
         return id;
@@ -73,4 +79,8 @@ public class Account {
     public String getInstituteId() { return instituteId; }
 
     public void setInstituteId(String instituteId) { this.instituteId = instituteId; }
+
+    public Institution getInstitution() { return institution; }
+
+    public void setInstitution(Institution institute) { this.institution = institute; }
 }
