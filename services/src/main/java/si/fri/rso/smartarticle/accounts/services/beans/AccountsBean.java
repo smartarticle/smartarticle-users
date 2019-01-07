@@ -78,7 +78,7 @@ public class AccountsBean {
             throw new NotFoundException();
         }
         try {
-            Institution inst = accountsBean.getInstitution(account.getInstituteId());
+            Institution inst = accountsBean.getInstitution(Integer.parseInt(account.getInstituteId()));
             account.setInstitution(inst);
         } catch (InternalServerErrorException e){}
         return account;
@@ -135,7 +135,7 @@ public class AccountsBean {
         return true;
     }
 
-    public Institution getInstitution(String institutionId) {
+    public Institution getInstitution(Integer institutionId) {
         Optional<String> baseUrl = institutionBaseProvider.get();
         if (baseUrl.isPresent()) {
             try {
