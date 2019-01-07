@@ -13,8 +13,9 @@ spec:
         app: account
     spec:
       containers:
-      - image: ajugo/smartarticle-users:0.6
+      - image: ajugo/smartarticle-users:0.7
         name: account
+        imagePullPolicy: "Always"
         env:
         - name: KUMULUZEE_DISCOVERY_CLUSTER
           value: gcloud
