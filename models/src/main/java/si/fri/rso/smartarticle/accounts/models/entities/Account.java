@@ -6,7 +6,9 @@ import java.time.Instant;
 @Entity(name = "account")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "Account.getAll", query = "SELECT c FROM account c")
+                @NamedQuery(name = "Account.getAll", query = "SELECT c FROM account c"),
+                @NamedQuery(name = "Account.findByInstitution", query = "SELECT o FROM account o WHERE o.instituteId = " +
+                        ":instituteId")
         })
 public class Account {
 
@@ -25,7 +27,8 @@ public class Account {
 
     private String title;
 
-    private String institute;
+    @Column(name = "institute_id")
+    private String instituteId;
 
     public Integer getId() {
         return id;
@@ -67,7 +70,7 @@ public class Account {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getInstitute() { return institute; }
+    public String getInstituteId() { return instituteId; }
 
-    public void setInstitute(String institute) { this.institute = institute; }
+    public void setInstituteId(String instituteId) { this.instituteId = instituteId; }
 }

@@ -19,16 +19,16 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class AccountsResource {
 
-    @Inject
-    private AccountsBean accountsBean;
-
     @Context
     protected UriInfo uriInfo;
+
+    @Inject
+    private AccountsBean accountsBean;
 
     @GET
     public Response getAccounts() {
 
-        List<Account> accounts = accountsBean.getAccounts();
+        List<Account> accounts = accountsBean.getAccounts(uriInfo);
 
         return Response.ok(accounts).build();
     }
@@ -39,7 +39,7 @@ public class AccountsResource {
 
         List<Account> accounts;
 
-        accounts = accountsBean.getAccountsFilter(uriInfo);
+        accounts = accountsBean.getAccounts(uriInfo);
 
         return Response.status(Response.Status.OK).entity(accounts).build();
     }
