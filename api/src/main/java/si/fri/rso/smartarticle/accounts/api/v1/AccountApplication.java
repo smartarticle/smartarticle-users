@@ -5,7 +5,7 @@ import com.kumuluz.ee.discovery.annotations.RegisterService;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-@RegisterService(value = "smartarticle-accounts")
+@RegisterService
 @ApplicationPath("/v1")
 public class AccountApplication extends Application {
 }

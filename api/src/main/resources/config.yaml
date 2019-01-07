@@ -1,5 +1,5 @@
 kumuluzee:
-  name: rso-accounts
+  name: smartarticle-accounts
   env:
     name: dev
   version: 1.0.0
@@ -9,16 +9,16 @@ kumuluzee:
       port: 8080
   datasources:
     - jndi-name: jdbc/AccountsDS
-      connection-url: jdbc:postgresql://172.17.0.1:5432/account
+      connection-url: jdbc:postgresql://159.122.187.161:31613/account
       username: dbuser
       password: postgres
       max-pool-size: 20
   config:
     etcd:
-      hosts: http://172.17.0.1:2379
+      hosts: http://159.122.187.161:32428
     discovery:
       etcd:
-        hosts: http://172.17.0.1:2379
+        hosts: http://159.122.187.161:32428
 app-properties:
   external-services:
     enabled: true
