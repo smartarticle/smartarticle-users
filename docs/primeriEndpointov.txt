@@ -1,0 +1,151 @@
+Nekaj primerov sporočil sistema 
+
+1.) Vse informacije in zbirke od uporabnika
+	Endpoint: get {url}/v1/accounts/{accountId}
+	Example:
+{
+  "articles": [
+    {
+      "abstraction": "This paper proposes a Fast Region-based Convolutional Network method (Fast R-CNN) for object detection.",
+      "accountId": "2",
+      "creation": "2015-01-01T00:00:00Z",
+      "id": 3,
+      "title": "Fast R-CNN",
+      "url": "https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Girshick_Fast_R-CNN_ICCV_2015_paper.pdf"
+    }
+  ],
+  "collections": [
+    {
+      "creation": "2019-01-01T00:00:00Z",
+      "description": "My first collection2",
+      "id": 3,
+      "title": "Test collections2"
+    }
+  ],
+  "dateOfBirth": "1980-03-17T15:36:38Z",
+  "firstName": "Franci",
+  "id": 2,
+  "instituteId": "2",
+  "institution": {
+    "address": "Kongresni trg 13",
+    "country": "Slovenia",
+    "email": "somethin1@gmail.com",
+    "id": 2,
+    "institute": "University of Somethin",
+    "post": "Ljubljana"
+  },
+  "lastName": "Dolenc",
+  "title": "researcher"
+}
+
+
+2.) Vse kolekcije od ustavnove 
+	Endpoint: get {url}/v1/institutions/collections/{instituteId}
+	Example:
+{
+  "collections": [
+    {
+      "creation": "2019-01-01T00:00:00Z",
+      "description": "My first collection",
+      "id": 1,
+      "title": "Test collections"
+    },
+    {
+      "creation": "2019-01-01T00:00:00Z",
+      "description": "My first collection2",
+      "id": 2,
+      "title": "Test collections1"
+    }
+  ],
+  "institution": {
+    "address": "Kongresni trg 12",
+    "country": "Slovenia",
+    "email": "somethin@gmail.com",
+    "id": 1,
+    "institute": "University of Ljubljana",
+    "post": "Ljubljana"
+  }
+}
+
+3.) Vsi članki od ustavnove 
+	Endpoint: get {url}/v1/institutions/articles/{instituteId}
+	Example:
+{
+  "articles": [
+    {
+      "abstraction": "This paper proposes a Fast Region-based Convolutional Network method (Fast R-CNN) for object detection.",
+      "accountId": "2",
+      "creation": "2015-01-01T00:00:00Z",
+      "id": 3,
+      "title": "Fast R-CNN",
+      "url": "https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Girshick_Fast_R-CNN_ICCV_2015_paper.pdf"
+    }
+  ],
+  "institution": {
+    "address": "Kongresni trg 13",
+    "country": "Slovenia",
+    "email": "somethin1@gmail.com",
+    "id": 2,
+    "institute": "University of Somethin",
+    "post": "Ljubljana"
+  }
+}
+
+
+4.) Vsi članki v neki zbirki
+	Endpoint: get {url}/v1/collections/{collectionId}
+	Example:
+{
+  "accountId": "1",
+  "articles": [
+    {
+      "abstraction": "This paper proposes a Fast Region-based Convolutional Network method (Fast R-CNN) for object detection.",
+      "creation": "2015-01-01T00:00:00Z",
+      "id": 2,
+      "title": "Fast R-CNN",
+      "url": "https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Girshick_Fast_R-CNN_ICCV_2015_paper.pdf"
+    },
+    {
+      "abstraction": "This paper proposes a Fast Region-based Convolutional Network method (Fast R-CNN) for object detection.",
+      "creation": "2015-01-01T00:00:00Z",
+      "id": 3,
+      "title": "Fast R-CNN",
+      "url": "https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Girshick_Fast_R-CNN_ICCV_2015_paper.pdf"
+    }
+  ],
+  "creation": "2019-01-01T00:00:00Z",
+  "description": "My first collection2",
+  "id": 2,
+  "title": "Test collections1"
+}
+
+5.) Uporabniki v neki instituciji
+Endpoint: get {url}/v1/institutions/{instituionId}
+	Example:
+{
+  "accounts": [
+    {
+      "dateOfBirth": "1970-01-01T15:36:38Z",
+      "firstName": "Joze",
+      "id": 1,
+      "instituteId": "1",
+      "lastName": "Hafner",
+      "title": "professor"
+    },
+    {
+      "dateOfBirth": "1998-11-29T15:36:38Z",
+      "firstName": "Janez",
+      "id": 3,
+      "instituteId": "1",
+      "lastName": "Hafner",
+      "title": "student"
+    }
+  ],
+  "address": "Kongresni trg 12",
+  "country": "Slovenia",
+  "email": "somethin@gmail.com",
+  "id": 1,
+  "institute": "University of Ljubljana",
+  "post": "Ljubljana"
+}
+
