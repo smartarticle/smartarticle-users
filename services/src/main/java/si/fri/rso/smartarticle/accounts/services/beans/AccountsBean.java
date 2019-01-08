@@ -62,35 +62,37 @@ public class AccountsBean {
     }
 
     public List<Account> getAccounts(UriInfo uriInfo) {
-        if (appProperties.isExternalServicesEnabled()) {
-            QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery())
-                    .defaultOffset(0)
-                    .build();
-            List<Account> accounts = JPAUtils.queryEntities(em, Account.class, queryParameters);
-            for (Account account: accounts) {
-                try {
+        QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery())
+                .defaultOffset(0)
+                .build();
+        List<Account> accounts = JPAUtils.queryEntities(em, Account.class, queryParameters);
+        for (Account account: accounts) {
+            try {
+                if (appProperties.isAccountInstituServicesEnabled()) {
                     account.setInstitution(accountsBean.getInstitution(Integer.parseInt(account.getInstituteId())));
-                } catch (InternalServerErrorException e){
-                    log.severe(e.getMessage());
                 }
-                try {
-                    account.setArticles(accountsBean.getArticles(account.getId()));
-                } catch (InternalServerErrorException e){
-                    log.severe(e.getMessage());
-                }
-                try {
-                    account.setCollections(accountsBean.getCollections(account.getId()));
-                } catch (InternalServerErrorException e){
-                    log.severe(e.getMessage());
-                }
+            } catch (InternalServerErrorException e){
+                log.severe(e.getMessage());
             }
-            return accounts;
+            try {
+                if (appProperties.isAccountArticleServicesEnabled()) {
+                    account.setArticles(accountsBean.getArticles(account.getId()));
+                }
+            } catch (InternalServerErrorException e){
+                log.severe(e.getMessage());
+            }
+            try {
+                if (appProperties.isAccountCollectionServicesEnabled()) {
+                    account.setCollections(accountsBean.getCollections(account.getId()));
+                }
+            } catch (InternalServerErrorException e){
+                log.severe(e.getMessage());
+            }
         }
-        return null;
+        return accounts;
     }
 
     public List<Account> getAccountsFilter(UriInfo uriInfo) {
-
         QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery()).defaultOffset(0)
                 .build();
 
@@ -98,25 +100,30 @@ public class AccountsBean {
     }
 
     public Account getAccount(Integer accountId) {
-
         Account account = em.find(Account.class, accountId);
 
         if (account == null) {
             throw new NotFoundException();
         }
         try {
-            account.setInstitution(accountsBean.getInstitution(Integer.parseInt(account.getInstituteId())));
-        } catch (InternalServerErrorException e){
+            if (appProperties.isAccountInstituServicesEnabled()) {
+                account.setInstitution(accountsBean.getInstitution(Integer.parseInt(account.getInstituteId())));
+            }
+        } catch (InternalServerErrorException e) {
             log.severe(e.getMessage());
         }
         try {
-            account.setArticles(accountsBean.getArticles(accountId));
-        } catch (InternalServerErrorException e){
+            if (appProperties.isAccountArticleServicesEnabled()) {
+                account.setArticles(accountsBean.getArticles(accountId));
+            }
+        } catch (InternalServerErrorException e) {
             log.severe(e.getMessage());
         }
         try {
-            account.setCollections( accountsBean.getCollections(accountId));
-        } catch (InternalServerErrorException e){
+            if (appProperties.isAccountCollectionServicesEnabled()) {
+                account.setCollections(accountsBean.getCollections(accountId));
+            }
+        } catch (InternalServerErrorException e) {
             log.severe(e.getMessage());
         }
         return account;
@@ -134,12 +141,10 @@ public class AccountsBean {
                         });
             } catch (WebApplicationException | ProcessingException e) {
                 log.severe(e.getMessage());
-                return null;
-                //throw new InternalServerErrorException(e);
+                throw new InternalServerErrorException(e);
             }
         }
         return null;
-
     }
 
     public List<Collection> getCollections(Integer accountId) {
@@ -153,16 +158,13 @@ public class AccountsBean {
                         });
             } catch (WebApplicationException | ProcessingException e) {
                 log.severe(e.getMessage());
-                return null;
-                // throw new InternalServerErrorException(e);
+                throw new InternalServerErrorException(e);
             }
         }
         return null;
-
     }
 
     public Account createAccount(Account account) {
-
         try {
             beginTx();
             em.persist(account);
@@ -174,28 +176,7 @@ public class AccountsBean {
         return account;
     }
 
-    public Account putAccount(String accountId, Account account) {
-
-        Account c = em.find(Account.class, accountId);
-
-        if (c == null) {
-            return null;
-        }
-
-        try {
-            beginTx();
-            account.setId(c.getId());
-            account = em.merge(account);
-            commitTx();
-        } catch (Exception e) {
-            rollbackTx();
-        }
-
-        return account;
-    }
-
     public boolean deleteAccount(String accountId) {
-
         Account account = em.find(Account.class, accountId);
 
         if (account != null) {
@@ -229,7 +210,6 @@ public class AccountsBean {
             }
         }
         return null;
-
     }
 
 

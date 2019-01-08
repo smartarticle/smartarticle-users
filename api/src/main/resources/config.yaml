@@ -22,3 +22,11 @@ kumuluzee:
 app-properties:
   external-services:
     enabled: true
+  account-services:
+    enabled: true
+  account-institute-services:
+    enabled: true
+  account-article-services:
+    enabled: true
+  account-collection-services:
+    enabled: true
