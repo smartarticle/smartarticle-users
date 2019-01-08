@@ -17,7 +17,7 @@ public class AccountServiceHealthCheck  implements HealthCheck{
     private AppProperties appProperties;
 
     public HealthCheckResponse call() {
-        if (appProperties.isHealthy()) {
+        if (appProperties.isHealthy()) { 
             return  HealthCheckResponse.named(AccountServiceHealthCheck.class.getSimpleName()).up().build();
         } else {
             return  HealthCheckResponse.named(AccountServiceHealthCheck.class.getSimpleName()).down().build();
