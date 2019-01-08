@@ -3,6 +3,7 @@ package si.fri.rso.smartarticle.accounts.models.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import si.fri.rso.smartarticle.accounts.models.dtos.Article;
+import si.fri.rso.smartarticle.accounts.models.dtos.Collection;
 import si.fri.rso.smartarticle.accounts.models.dtos.Institution;
 
 import javax.persistence.*;
@@ -42,6 +43,9 @@ public class Account {
 
     @Transient
     private List<Article> articles;
+
+    @Transient
+    private List<Collection> collections;
 
     public Integer getId() {
         return id;
@@ -100,5 +104,13 @@ public class Account {
 
     public void setArticles(List<Article> articles) {
         this.articles = articles;
+    }
+
+    public List<Collection> getCollections() {
+        return collections;
+    }
+
+    public void setCollections(List<Collection> collections) {
+        this.collections = collections;
     }
 }

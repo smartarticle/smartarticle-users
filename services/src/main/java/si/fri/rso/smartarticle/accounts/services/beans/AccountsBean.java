@@ -5,6 +5,7 @@ import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.rso.smartarticle.accounts.models.dtos.Article;
+import si.fri.rso.smartarticle.accounts.models.dtos.Collection;
 import si.fri.rso.smartarticle.accounts.models.dtos.Institution;
 import si.fri.rso.smartarticle.accounts.models.entities.Account;
 import si.fri.rso.smartarticle.accounts.services.configuration.AppProperties;
@@ -51,6 +52,10 @@ public class AccountsBean {
     @DiscoverService("smartarticle-articles")
     private Provider<Optional<String>> articleBaseProvider;
 
+    @Inject
+    @DiscoverService("smartarticle-collections")
+    private Provider<Optional<String>> collectionBaseProvider;
+
     @PostConstruct
     private void init() {
         httpClient = ClientBuilder.newClient();
@@ -66,6 +71,7 @@ public class AccountsBean {
                 try {
                     ac.setInstitution(accountsBean.getInstitution(Integer.parseInt(ac.getInstituteId())));
                     ac.setArticles(accountsBean.getArticles(ac.getId()));
+                    ac.setCollections(accountsBean.getCollections(ac.getId()));
                 } catch (InternalServerErrorException e){}
             }
             return acc;
@@ -90,8 +96,10 @@ public class AccountsBean {
         }
         Institution inst = accountsBean.getInstitution(Integer.parseInt(account.getInstituteId()));
         List<Article> art = accountsBean.getArticles(accountId);
+        List<Collection> col = accountsBean.getCollections(accountId);
         account.setInstitution(inst);
         account.setArticles(art);
+        account.setCollections(col);
         return account;
     }
 
@@ -107,7 +115,27 @@ public class AccountsBean {
                         });
             } catch (WebApplicationException | ProcessingException e) {
                 log.severe(e.getMessage());
-                throw new InternalServerErrorException(e);
+                return null;
+                //throw new InternalServerErrorException(e);
+            }
+        }
+        return null;
+
+    }
+
+    public List<Collection> getCollections(Integer accountId) {
+        Optional<String> baseUrl = collectionBaseProvider.get();
+        if (baseUrl.isPresent()) {
+            try {
+                String link = baseUrl.get();
+                return httpClient
+                        .target(link + "/v1/collections?where=accountId:EQ:" + accountId)
+                        .request().get(new GenericType<List<Collection>>() {
+                        });
+            } catch (WebApplicationException | ProcessingException e) {
+                log.severe(e.getMessage());
+                return null;
+                // throw new InternalServerErrorException(e);
             }
         }
         return null;
