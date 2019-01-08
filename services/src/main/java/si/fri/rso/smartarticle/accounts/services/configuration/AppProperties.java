@@ -8,9 +8,6 @@ import javax.enterprise.context.ApplicationScoped;
 @ConfigBundle("app-properties")
 public class AppProperties {
 
-    @ConfigValue(value = "external-services.enabled", watch = true)
-    private boolean externalServicesEnabled;
-
     @ConfigValue(value = "account-services.enabled", watch = true)
     private boolean accountServicesEnabled;
 
@@ -22,14 +19,6 @@ public class AppProperties {
 
     @ConfigValue(value = "account-collection-services.enabled", watch = true)
     private boolean accountCollectionServicesEnabled;
-
-    public boolean isExternalServicesEnabled() {
-        return externalServicesEnabled;
-    }
-
-    public void setExternalServicesEnabled(boolean externalServicesEnabled) {
-        this.externalServicesEnabled = externalServicesEnabled;
-    }
 
     public boolean isAccountServicesEnabled() {
         return accountServicesEnabled;

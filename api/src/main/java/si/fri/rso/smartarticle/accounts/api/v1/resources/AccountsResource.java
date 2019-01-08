@@ -31,33 +31,33 @@ public class AccountsResource {
 
     @GET
     public Response getAccounts() {
-        if (appProperties.isExternalServicesEnabled() && appProperties.isAccountServicesEnabled()) {
+        if (appProperties.isAccountServicesEnabled()) {
             List<Account> accounts = accountsBean.getAccounts(uriInfo);
 
             return Response.ok(accounts).build();
         }
         else{
-            return Response.noContent().build();
+            return Response.ok().build();
         }
     }
 
     @GET
     @Path("/filtered")
     public Response getAccountsFiltered() {
-        if (appProperties.isExternalServicesEnabled() && appProperties.isAccountServicesEnabled()) {
+        if (appProperties.isAccountServicesEnabled()) {
             List<Account> accounts;
             accounts = accountsBean.getAccounts(uriInfo);
             return Response.status(Response.Status.OK).entity(accounts).build();
         }
         else{
-            return Response.noContent().build();
+            return Response.ok().build();
         }
     }
 
     @GET
     @Path("/{accountId}")
     public Response getAccount(@PathParam("accountId") Integer accountId) {
-        if (appProperties.isExternalServicesEnabled() && appProperties.isAccountServicesEnabled()) {
+        if (appProperties.isAccountServicesEnabled()) {
             Account account = accountsBean.getAccount(accountId);
 
             if (account == null) {
@@ -67,13 +67,13 @@ public class AccountsResource {
             return Response.status(Response.Status.OK).entity(account).build();
         }
         else{
-            return Response.noContent().build();
+            return Response.ok().build();
         }
     }
 
     @POST
     public Response createAccount(Account account) {
-        if (appProperties.isExternalServicesEnabled() && appProperties.isAccountServicesEnabled()) {
+        if (appProperties.isAccountServicesEnabled()) {
             if ((account.getFirstName() == null || account.getFirstName().isEmpty()) || (account.getLastName() == null
                     || account.getLastName().isEmpty())) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
@@ -88,14 +88,14 @@ public class AccountsResource {
             }
         }
         else{
-            return Response.noContent().build();
+            return Response.ok().build();
         }
     }
 
     @DELETE
     @Path("{accountId}")
     public Response deleteAccount(@PathParam("accountId") String accountId) {
-        if (appProperties.isExternalServicesEnabled() && appProperties.isAccountServicesEnabled()) {
+        if (appProperties.isAccountServicesEnabled()) {
             boolean deleted = accountsBean.deleteAccount(accountId);
 
             if (deleted) {
@@ -105,7 +105,7 @@ public class AccountsResource {
             }
         }
         else{
-            return Response.noContent().build();
+            return Response.ok().build();
         }
     }
 }
