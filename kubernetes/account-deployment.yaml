@@ -13,7 +13,7 @@ spec:
         app: account
     spec:
       containers:
-      - image: ajugo/smartarticle-users:0.15
+      - image: ajugo/smartarticle-users:0.16
         name: account
         imagePullPolicy: "Always"
         env:
@@ -35,6 +35,12 @@ spec:
         - containerPort: 8080
           name: server
           protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: server
+          initialDelaySeconds: 20
+          periodSeconds: 3
 
 ---
 

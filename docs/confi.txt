@@ -1,0 +1,29 @@
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-accounts/1.0.0/config/app-properties/account-services/enabled true
+
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-accounts/1.0.0/config/app-properties/account-institute-services/enabled true
+
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-accounts/1.0.0/config/app-properties/account-article-services/enabled true
+
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-accounts/1.0.0/config/app-properties/account-collection-services/enabled true
+
+
+
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-institutions/1.0.0/config/app-properties/institute-services/enabled true
+
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-institutions/1.0.0/config/app-properties/institute-account-services/enabled true
+
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-institutions/1.0.0/config/app-properties/institute-article-services/enabled true
+
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-institutions/1.0.0/config/app-properties/institute-collection-services/enabled true
+
+
+
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-articles/1.0.0/config/app-properties/article-services/enabled true
+
+
+
+
+
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-collections/1.0.0/config/app-properties/collection-services/enabled true
+
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-collections/1.0.0/config/app-properties/collection-article-services/enabled true

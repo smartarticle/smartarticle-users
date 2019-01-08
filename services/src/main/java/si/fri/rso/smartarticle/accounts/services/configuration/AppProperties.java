@@ -20,6 +20,9 @@ public class AppProperties {
     @ConfigValue(value = "account-collection-services.enabled", watch = true)
     private boolean accountCollectionServicesEnabled;
 
+    @ConfigValue(watch = true)
+    private boolean healthy;
+
     public boolean isAccountServicesEnabled() {
         return accountServicesEnabled;
     }
@@ -50,5 +53,13 @@ public class AppProperties {
 
     public void setAccountCollectionServicesEnabled(boolean accountCollectionServicesEnabled) {
         this.accountCollectionServicesEnabled = accountCollectionServicesEnabled;
+    }
+
+    public boolean isHealthy() {
+        return healthy;
+    }
+
+    public void setHealthy(boolean healthy) {
+        this.healthy = healthy;
     }
 }

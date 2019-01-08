@@ -33,10 +33,11 @@ public class AccountsResource {
     public Response getAccounts() {
         if (appProperties.isAccountServicesEnabled()) {
             List<Account> accounts = accountsBean.getAccounts(uriInfo);
-
+            appProperties.setHealthy(true);
             return Response.ok(accounts).build();
         }
         else{
+            appProperties.setHealthy(true);
             return Response.ok().build();
         }
     }
@@ -47,9 +48,11 @@ public class AccountsResource {
         if (appProperties.isAccountServicesEnabled()) {
             List<Account> accounts;
             accounts = accountsBean.getAccounts(uriInfo);
+            appProperties.setHealthy(true);
             return Response.status(Response.Status.OK).entity(accounts).build();
         }
         else{
+            appProperties.setHealthy(true);
             return Response.ok().build();
         }
     }
@@ -61,12 +64,14 @@ public class AccountsResource {
             Account account = accountsBean.getAccount(accountId);
 
             if (account == null) {
+                appProperties.setHealthy(true);
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
-
+            appProperties.setHealthy(true);
             return Response.status(Response.Status.OK).entity(account).build();
         }
         else{
+            appProperties.setHealthy(true);
             return Response.ok().build();
         }
     }
@@ -76,18 +81,22 @@ public class AccountsResource {
         if (appProperties.isAccountServicesEnabled()) {
             if ((account.getFirstName() == null || account.getFirstName().isEmpty()) || (account.getLastName() == null
                     || account.getLastName().isEmpty())) {
+                appProperties.setHealthy(true);
                 return Response.status(Response.Status.BAD_REQUEST).build();
             } else {
                 account = accountsBean.createAccount(account);
             }
 
             if (account.getId() != null) {
+                appProperties.setHealthy(true);
                 return Response.status(Response.Status.CREATED).entity(account).build();
             } else {
+                appProperties.setHealthy(true);
                 return Response.status(Response.Status.CONFLICT).entity(account).build();
             }
         }
         else{
+            appProperties.setHealthy(true);
             return Response.ok().build();
         }
     }
@@ -99,12 +108,15 @@ public class AccountsResource {
             boolean deleted = accountsBean.deleteAccount(accountId);
 
             if (deleted) {
+                appProperties.setHealthy(true);
                 return Response.status(Response.Status.GONE).build();
             } else {
+                appProperties.setHealthy(true);
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
         }
         else{
+            appProperties.setHealthy(true);
             return Response.ok().build();
         }
     }

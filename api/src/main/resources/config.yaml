@@ -13,6 +13,10 @@ kumuluzee:
       username: dbuser
       password: postgres
       max-pool-size: 20
+  health:
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/AccountsDS
   config:
     etcd:
       hosts: http://159.122.187.161:32428
@@ -28,3 +32,4 @@ app-properties:
     enabled: true
   account-collection-services:
     enabled: true
+  healthy: true

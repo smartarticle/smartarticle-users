@@ -73,6 +73,7 @@ public class AccountsBean {
                 }
             } catch (InternalServerErrorException e){
                 log.severe(e.getMessage());
+                appProperties.setHealthy(false);
             }
             try {
                 if (appProperties.isAccountArticleServicesEnabled()) {
@@ -80,6 +81,7 @@ public class AccountsBean {
                 }
             } catch (InternalServerErrorException e){
                 log.severe(e.getMessage());
+                appProperties.setHealthy(false);
             }
             try {
                 if (appProperties.isAccountCollectionServicesEnabled()) {
@@ -87,6 +89,7 @@ public class AccountsBean {
                 }
             } catch (InternalServerErrorException e){
                 log.severe(e.getMessage());
+                appProperties.setHealthy(false);
             }
         }
         return accounts;
@@ -95,7 +98,7 @@ public class AccountsBean {
     public List<Account> getAccountsFilter(UriInfo uriInfo) {
         QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery()).defaultOffset(0)
                 .build();
-
+        appProperties.setHealthy(true);
         return JPAUtils.queryEntities(em, Account.class, queryParameters);
     }
 
@@ -111,6 +114,7 @@ public class AccountsBean {
             }
         } catch (InternalServerErrorException e) {
             log.severe(e.getMessage());
+            appProperties.setHealthy(false);
         }
         try {
             if (appProperties.isAccountArticleServicesEnabled()) {
@@ -118,6 +122,7 @@ public class AccountsBean {
             }
         } catch (InternalServerErrorException e) {
             log.severe(e.getMessage());
+            appProperties.setHealthy(false);
         }
         try {
             if (appProperties.isAccountCollectionServicesEnabled()) {
@@ -125,6 +130,7 @@ public class AccountsBean {
             }
         } catch (InternalServerErrorException e) {
             log.severe(e.getMessage());
+            appProperties.setHealthy(false);
         }
         return account;
     }
@@ -141,9 +147,11 @@ public class AccountsBean {
                         });
             } catch (WebApplicationException | ProcessingException e) {
                 log.severe(e.getMessage());
+                appProperties.setHealthy(false);
                 throw new InternalServerErrorException(e);
             }
         }
+        appProperties.setHealthy(false);
         return null;
     }
 
@@ -158,6 +166,7 @@ public class AccountsBean {
                         });
             } catch (WebApplicationException | ProcessingException e) {
                 log.severe(e.getMessage());
+                appProperties.setHealthy(false);
                 throw new InternalServerErrorException(e);
             }
         }
@@ -169,8 +178,10 @@ public class AccountsBean {
             beginTx();
             em.persist(account);
             commitTx();
+            appProperties.setHealthy(true);
         } catch (Exception e) {
             rollbackTx();
+            appProperties.setHealthy(false);
         }
 
         return account;
@@ -184,11 +195,15 @@ public class AccountsBean {
                 beginTx();
                 em.remove(account);
                 commitTx();
+                appProperties.setHealthy(true);
             } catch (Exception e) {
                 rollbackTx();
+                appProperties.setHealthy(false);
             }
-        } else
+        } else {
+            appProperties.setHealthy(false);
             return false;
+        }
 
         return true;
     }
@@ -206,6 +221,7 @@ public class AccountsBean {
                 log.severe(e.getMessage());
                 String link = baseUrl.get();
                 log.severe(link + "/v1/institutions/info/" + institutionId);
+                appProperties.setHealthy(false);
                 throw new InternalServerErrorException(e);
             }
         }
