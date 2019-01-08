@@ -66,15 +66,25 @@ public class AccountsBean {
             QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery())
                     .defaultOffset(0)
                     .build();
-            List<Account> acc = JPAUtils.queryEntities(em, Account.class, queryParameters);
-            for (Account ac: acc) {
+            List<Account> accounts = JPAUtils.queryEntities(em, Account.class, queryParameters);
+            for (Account account: accounts) {
                 try {
-                    ac.setInstitution(accountsBean.getInstitution(Integer.parseInt(ac.getInstituteId())));
-                    ac.setArticles(accountsBean.getArticles(ac.getId()));
-                    ac.setCollections(accountsBean.getCollections(ac.getId()));
-                } catch (InternalServerErrorException e){}
+                    account.setInstitution(accountsBean.getInstitution(Integer.parseInt(account.getInstituteId())));
+                } catch (InternalServerErrorException e){
+                    log.severe(e.getMessage());
+                }
+                try {
+                    account.setArticles(accountsBean.getArticles(account.getId()));
+                } catch (InternalServerErrorException e){
+                    log.severe(e.getMessage());
+                }
+                try {
+                    account.setCollections(accountsBean.getCollections(account.getId()));
+                } catch (InternalServerErrorException e){
+                    log.severe(e.getMessage());
+                }
             }
-            return acc;
+            return accounts;
         }
         return null;
     }
@@ -94,12 +104,21 @@ public class AccountsBean {
         if (account == null) {
             throw new NotFoundException();
         }
-        Institution inst = accountsBean.getInstitution(Integer.parseInt(account.getInstituteId()));
-        List<Article> art = accountsBean.getArticles(accountId);
-        List<Collection> col = accountsBean.getCollections(accountId);
-        account.setInstitution(inst);
-        account.setArticles(art);
-        account.setCollections(col);
+        try {
+            account.setInstitution(accountsBean.getInstitution(Integer.parseInt(account.getInstituteId())));
+        } catch (InternalServerErrorException e){
+            log.severe(e.getMessage());
+        }
+        try {
+            account.setArticles(accountsBean.getArticles(accountId));
+        } catch (InternalServerErrorException e){
+            log.severe(e.getMessage());
+        }
+        try {
+            account.setCollections( accountsBean.getCollections(accountId));
+        } catch (InternalServerErrorException e){
+            log.severe(e.getMessage());
+        }
         return account;
     }
 
