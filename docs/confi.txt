@@ -1,5 +1,7 @@
 kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-accounts/1.0.0/config/app-properties/account-services/enabled true
 
+kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-accounts/1.0.0/config/app-properties/healthy false
+
 kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-accounts/1.0.0/config/app-properties/account-institute-services/enabled true
 
 kubectl exec etcd-deployment-67f49975d4-c9sdj  -- /usr/local/bin/etcdctl set environments/dev/services/smartarticle-accounts/1.0.0/config/app-properties/account-article-services/enabled true

@@ -1,10 +1,13 @@
 package si.fri.rso.smartarticle.accounts.api.v1.resources;
 
+
+
+import com.kumuluz.ee.logs.cdi.Log;
 import si.fri.rso.smartarticle.accounts.models.entities.Account;
 import si.fri.rso.smartarticle.accounts.services.beans.AccountsBean;
 import si.fri.rso.smartarticle.accounts.services.configuration.AppProperties;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -14,7 +17,8 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 
-@RequestScoped
+@Log
+@ApplicationScoped
 @Path("/accounts")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
