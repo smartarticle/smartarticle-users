@@ -27,7 +27,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.UriInfo;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -140,7 +139,9 @@ public class AccountsBean {
         return account;
     }
 
-
+    @CircuitBreaker(requestVolumeThreshold = 2)
+    @Timeout(value = 1, unit = ChronoUnit.SECONDS)
+    @Fallback(fallbackMethod = "getArticlesFallback")
     public List<Article> getArticles(Integer accountId) {
         Optional<String> baseUrl = articleBaseProvider.get();
         if (baseUrl.isPresent()) {
@@ -160,6 +161,9 @@ public class AccountsBean {
         return null;
     }
 
+    @CircuitBreaker(requestVolumeThreshold = 2)
+    @Timeout(value = 1, unit = ChronoUnit.SECONDS)
+    @Fallback(fallbackMethod = "getCollectionsFallback")
     public List<Collection> getCollections(Integer accountId) {
         Optional<String> baseUrl = collectionBaseProvider.get();
         if (baseUrl.isPresent()) {
@@ -238,6 +242,18 @@ public class AccountsBean {
 
 
     public Institution getInstitutionsFallback(Integer institutionId) {
+
+        return null;
+
+    }
+
+    public Institution getCollectionsFallback(Integer institutionId) {
+
+        return null;
+
+    }
+
+    public Institution getArticlesFallback(Integer institutionId) {
 
         return null;
 
