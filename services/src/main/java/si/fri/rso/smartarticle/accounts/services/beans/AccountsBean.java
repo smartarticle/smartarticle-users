@@ -27,6 +27,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.UriInfo;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -247,15 +248,15 @@ public class AccountsBean {
 
     }
 
-    public Institution getCollectionsFallback(Integer institutionId) {
+    public List<Collection> getCollectionsFallback(Integer institutionId) {
 
-        return null;
+        return Collections.emptyList();
 
     }
 
-    public Institution getArticlesFallback(Integer institutionId) {
+    public List<Article> getArticlesFallback(Integer institutionId) {
 
-        return null;
+        return Collections.emptyList();
 
     }
 
