@@ -113,29 +113,14 @@ public class AccountsBean {
         if (account == null) {
             throw new NotFoundException();
         }
-        try {
-            if (appProperties.isAccountInstituServicesEnabled()) {
-                account.setInstitution(accountsBean.getInstitution(Integer.parseInt(account.getInstituteId())));
-            }
-        } catch (InternalServerErrorException e) {
-            log.severe(e.getMessage());
-            appProperties.setHealthy(false);
-        }
-        try {
-            if (appProperties.isAccountArticleServicesEnabled()) {
-                account.setArticles(accountsBean.getArticles(accountId));
-            }
-        } catch (InternalServerErrorException e) {
-            log.severe(e.getMessage());
-            appProperties.setHealthy(false);
-        }
-        try {
-            if (appProperties.isAccountCollectionServicesEnabled()) {
-                account.setCollections(accountsBean.getCollections(accountId));
-            }
-        } catch (InternalServerErrorException e) {
-            log.severe(e.getMessage());
-            appProperties.setHealthy(false);
+        if (appProperties.isAccountInstituServicesEnabled())
+            account.setInstitution(accountsBean.getInstitution(Integer.parseInt(account.getInstituteId())));
+
+        if (appProperties.isAccountArticleServicesEnabled())
+            account.setArticles(accountsBean.getArticles(accountId));
+
+        if (appProperties.isAccountCollectionServicesEnabled()) {
+            account.setCollections(accountsBean.getCollections(accountId));
         }
         return account;
     }
@@ -224,19 +209,10 @@ public class AccountsBean {
     public Institution getInstitution(Integer institutionId) {
         Optional<String> baseUrl = institutionBaseProvider.get();
         if (baseUrl.isPresent()) {
-            try {
-                String link = baseUrl.get();
-                return httpClient
-                        .target(link + "/v1/institutions/info/" + institutionId)
-                        .request().get(new GenericType<Institution>() {
-                        });
-            } catch (WebApplicationException | ProcessingException e) {
-                log.severe(e.getMessage());
-                String link = baseUrl.get();
-                log.severe(link + "/v1/institutions/info/" + institutionId);
-                appProperties.setHealthy(false);
-                throw new InternalServerErrorException(e);
-            }
+            String link = baseUrl.get();
+            return httpClient
+                    .target(link + "/v1/institutions/info/" + institutionId)
+                    .request().get(new GenericType<Institution>() {});
         }
         return null;
     }
