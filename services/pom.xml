@@ -48,6 +48,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.kumuluz.ee.fault.tolerance</groupId>
+            <artifactId>kumuluzee-fault-tolerance-hystrix</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>si.fri.rso.smartarticle</groupId>
             <artifactId>account-models</artifactId>
         </dependency>

@@ -4,6 +4,9 @@ package si.fri.rso.smartarticle.accounts.services.beans;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import si.fri.rso.smartarticle.accounts.models.dtos.Article;
 import si.fri.rso.smartarticle.accounts.models.dtos.Collection;
 import si.fri.rso.smartarticle.accounts.models.dtos.Institution;
@@ -23,6 +26,8 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.UriInfo;
+import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -208,6 +213,9 @@ public class AccountsBean {
         return true;
     }
 
+    @CircuitBreaker(requestVolumeThreshold = 3)
+    @Timeout(value = 2, unit = ChronoUnit.SECONDS)
+    @Fallback(fallbackMethod = "getInstitutionsFallback")
     public Institution getInstitution(Integer institutionId) {
         Optional<String> baseUrl = institutionBaseProvider.get();
         if (baseUrl.isPresent()) {
@@ -228,6 +236,12 @@ public class AccountsBean {
         return null;
     }
 
+
+    public Institution getInstitutionsFallback(Integer institutionId) {
+
+        return null;
+
+    }
 
     private void beginTx() {
         if (!em.getTransaction().isActive())
