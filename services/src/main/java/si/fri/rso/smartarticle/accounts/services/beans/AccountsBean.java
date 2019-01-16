@@ -134,10 +134,6 @@ public class AccountsBean {
         if (baseUrl.isPresent()) {
             try {
                 String link = baseUrl.get();
-                log.info(httpClient
-                        .target("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=json&rettype=abstract&id=25081398")
-                        .request().get().readEntity(String.class)); //.get(new GenericType<List<Article>>() {
-                //});
                 return httpClient
                         .target(link + "/v1/articles?where=accountId:EQ:" + accountId)
                         .request().get(new GenericType<List<Article>>() {
