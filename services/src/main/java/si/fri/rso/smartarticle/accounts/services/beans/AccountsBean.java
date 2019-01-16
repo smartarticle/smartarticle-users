@@ -4,6 +4,7 @@ package si.fri.rso.smartarticle.accounts.services.beans;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
+import org.apache.commons.logging.Log;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Timeout;
@@ -133,6 +134,10 @@ public class AccountsBean {
         if (baseUrl.isPresent()) {
             try {
                 String link = baseUrl.get();
+                log.info(httpClient
+                        .target("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=json&rettype=abstract&id=25081398")
+                        .request().get().toString()); //.get(new GenericType<List<Article>>() {
+                //});
                 return httpClient
                         .target(link + "/v1/articles?where=accountId:EQ:" + accountId)
                         .request().get(new GenericType<List<Article>>() {
